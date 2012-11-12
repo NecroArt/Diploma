@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Untitled Gantt Project" company="" webLink="http://" view-date="2012-09-19" view-index="0" gantt-divider-location="933" resource-divider-location="300" version="2.0">
+<project name="Untitled Gantt Project" company="" webLink="http://" view-date="2012-11-01" view-index="0" gantt-divider-location="354" resource-divider-location="300" version="2.0">
     <description/>
-    <view zooming-state="default:3" id="gantt-chart"/>
+    <view zooming-state="default:10" id="gantt-chart"/>
     <view id="resource-table">
         <field id="0" name="Имя" width="50" order="0"/>
         <field id="1" name="Стандартная роль" width="50" order="1"/>
@@ -40,7 +40,7 @@
         <task id="1" name="найти алгоритм построения ортогональной проекции изображения" color="#8cb6ce" meeting="false" start="2012-11-19" duration="15" complete="0" expand="true">
             <depend id="3" type="2" difference="0" hardness="Rubber"/>
         </task>
-        <task id="3" name="реализовать алгоритм построения ортогональной проекции изображения" color="#8cb6ce" meeting="false" start="2012-12-19" duration="23" complete="0" expand="true">
+        <task id="3" name="реализовать алгоритм построения ортогональной проекции изображения" color="#8cb6ce" meeting="false" start="2012-12-13" duration="23" complete="0" expand="true">
             <depend id="25" type="2" difference="0" hardness="Rubber"/>
         </task>
         <task id="2" name="найти способы идентификации льдин, моря, суши" color="#8cb6ce" meeting="false" start="2012-12-10" duration="7" complete="0" expand="true">
@@ -56,7 +56,9 @@
             <depend id="25" type="2" difference="0" hardness="Rubber"/>
         </task>
         <task id="25" name="оттестировать и отладить ПС" color="#8cb6ce" meeting="false" start="2013-03-04" duration="13" complete="0" expand="true"/>
-        <task id="51" name="предзащита" color="#8cb6ce" meeting="false" start="2013-06-03" duration="5" complete="0" expand="true"/>
+        <task id="51" name="предзащита" color="#8cb6ce" meeting="false" start="2013-06-03" duration="5" complete="0" expand="true">
+            <depend id="53" type="2" difference="0" hardness="Rubber"/>
+        </task>
         <task id="53" name="защита" color="#8cb6ce" meeting="false" start="2013-06-17" duration="5" complete="0" expand="true"/>
     </tasks>
     <resources/>
@@ -71,9 +73,9 @@
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="473" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="226" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="230" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="173" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="88" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="89" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
