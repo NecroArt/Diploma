@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="Untitled Gantt Project" company="" webLink="http://" view-date="2013-01-04" view-index="0" gantt-divider-location="246" resource-divider-location="300" version="2.0" locale="ru">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2013-02-22" view-index="0" gantt-divider-location="246" resource-divider-location="300" version="2.0" locale="ru_RU">
     <description/>
-    <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="Название" width="48" order="0"/>
-        <field id="tpd4" name="Дата начала" width="25" order="1"/>
+    <view zooming-state="default:0" id="gantt-chart">
+        <field id="tpd3" name="Название" width="51" order="0"/>
+        <field id="tpd4" name="Дата начала" width="22" order="1"/>
         <field id="tpd5" name="Дата окончания" width="26" order="2"/>
         <option id="taskLabelUp" value="name"/>
-        <option id="taskLabelDown" value="taskDates"/>
     </view>
     <view id="resource-table">
         <field id="0" name="Имя" width="50" order="0"/>
@@ -38,29 +36,29 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="завершить проект 4-го курса" color="#8cb6ce" meeting="false" start="2012-12-25" duration="16" complete="36" expand="true">
-            <depend id="2" type="2" difference="0" hardness="Rubber"/>
+        <task id="56" name="реализовать определение расстояния" color="#8cb6ce" meeting="false" start="2013-02-25" duration="4" complete="0" expand="true">
             <depend id="25" type="2" difference="0" hardness="Rubber"/>
         </task>
-        <task id="1" name="найти и сформулировать алгоритм построения ортогональной проекции изображения" color="#8cb6ce" meeting="false" start="2013-01-07" duration="20" complete="0" expand="true">
+        <task id="61" name="реализовать определение координат" color="#8cb6ce" meeting="false" start="2013-02-25" duration="4" complete="0" expand="true"/>
+        <task id="1" name="найти и сформулировать алгоритм построения ортогональной проекции изображения" color="#8cb6ce" meeting="false" start="2013-02-25" duration="3" complete="0" expand="true">
             <depend id="3" type="2" difference="0" hardness="Rubber"/>
         </task>
-        <task id="3" name="реализовать алгоритм построения ортогональной проекции изображения" color="#8cb6ce" meeting="false" start="2013-02-04" duration="21" complete="0" expand="true">
+        <task id="3" name="реализовать алгоритм построения ортогональной проекции изображения" color="#8cb6ce" meeting="false" start="2013-02-28" duration="3" complete="0" expand="true">
             <depend id="25" type="2" difference="0" hardness="Rubber"/>
         </task>
-        <task id="2" name="найти способы идентификации льдин, моря, суши" color="#8cb6ce" meeting="false" start="2013-01-16" duration="7" complete="0" expand="true">
+        <task id="2" name="найти способы идентификации льдин, моря, суши" color="#8cb6ce" meeting="false" start="2013-02-25" duration="3" complete="0" expand="true">
             <depend id="4" type="2" difference="0" hardness="Rubber"/>
         </task>
-        <task id="4" name="реализовать алгоритмы идентификации льдин, моря, суши" color="#8cb6ce" meeting="false" start="2013-01-25" duration="21" complete="0" expand="true">
+        <task id="4" name="реализовать алгоритмы идентификации льдин, моря, суши" color="#8cb6ce" meeting="false" start="2013-02-28" duration="3" complete="0" expand="true">
             <depend id="25" type="2" difference="0" hardness="Rubber"/>
         </task>
-        <task id="11" name="сделать обзор литературы" color="#8cb6ce" meeting="false" start="2013-02-19" duration="2" complete="0" expand="true">
-            <depend id="5" type="2" difference="0" hardness="Strong"/>
+        <task id="11" name="сделать обзор литературы" color="#8cb6ce" meeting="false" start="2013-02-25" duration="2" complete="39" expand="true">
+            <depend id="5" type="2" difference="0" hardness="Rubber"/>
         </task>
-        <task id="5" name="закончить документацию" color="#0000cc" meeting="false" start="2013-02-21" duration="5" complete="0" expand="true">
+        <task id="5" name="закончить документацию" color="#0000cc" meeting="false" start="2013-02-27" duration="3" complete="0" expand="true">
             <depend id="25" type="2" difference="0" hardness="Rubber"/>
         </task>
-        <task id="25" name="оттестировать и отладить ПС" color="#8cb6ce" meeting="false" start="2013-03-05" duration="13" complete="0" expand="true"/>
+        <task id="25" name="оттестировать и отладить ПС" color="#8cb6ce" meeting="false" start="2013-03-05" duration="19" complete="0" expand="true"/>
         <task id="51" name="предзащита" color="#8cb6ce" meeting="false" start="2013-06-03" duration="5" complete="0" expand="true">
             <depend id="53" type="2" difference="0" hardness="Rubber"/>
         </task>
@@ -79,8 +77,8 @@
         <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd11" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="117" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="62" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="124" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="55" visible="true"/>
         <displaycolumn property-id="tpd5" order="2" width="63" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
