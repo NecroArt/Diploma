@@ -77,8 +77,8 @@ int main (int argc, char** argv) {
 	cvReleaseImage(&inputImage2);
 	
 	Skelet skelet2 = skelets_2[0];
-	bool fl = compareSkelets(skelet1, skelet2);
-//#define main_action
+	//bool fl = compareSkelets(skelet1, skelet2);
+#define main_action
 #ifdef main_action
 	cvNamedWindow("original",CV_WINDOW_AUTOSIZE);
 	//улучшение снимков
