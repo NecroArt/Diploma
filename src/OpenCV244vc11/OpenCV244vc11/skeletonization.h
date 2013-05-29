@@ -124,7 +124,7 @@ void rotateMask(IplImage *mask) {
 void fileOutput(char *s, IplImage *inputImage){
 	FILE *f = fopen(s, "w");
 	char *temp = new char [5];
-	int x1, y1; uchar* ptr1;
+	//int x1, y1; uchar* ptr1;
 	for( int y=0; y<inputImage->height; y++ ) {
 		uchar* ptr = (uchar*) (inputImage->imageData + y * inputImage->widthStep);
 		for( int x=0; x < inputImage->width; x++ ) {

@@ -154,6 +154,7 @@
     <ClInclude Include="skeletonization.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="test.h" />
     <ClInclude Include="ui.h" />
   </ItemGroup>
   <ItemGroup>

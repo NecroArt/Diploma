@@ -48,6 +48,9 @@ void sortSkelet(vector <Arch> &Arches);
 //функция для сравнения двух дуг по их длине
 bool isFirstArchBigger (Arch arch1, Arch arch2);
 
+//подсчитывает процентное содержания льда на снимке
+float calculateIceContent (IplImage *src);
+
 bool compare2Skelets (Skelet first_skelet, Skelet second_skelet) {
 	bool is_equal = true;
 	sortSkelet(first_skelet.arch);
@@ -109,6 +112,30 @@ void sortSkelet(vector <Arch> &Arches) {
 IplImage *getIce (IplImage *inputImage) {
 	IplImage *outputImage = cvCreateImage(cvSize(inputImage->width,inputImage->height), IPL_DEPTH_8U, 1);
 	return outputImage;
+}
+
+float calculateIceContent (IplImage *src) {
+	IplImage* hsv = cvCreateImage( cvGetSize(src), 8, 3 );
+	IplImage* s_plane = cvCreateImage( cvGetSize(src), 8, 1 );
+	IplImage* v_plane = cvCreateImage( cvGetSize(src), 8, 1 );
+	cvCvtColor(src, hsv, CV_BGR2HSV);
+	// разбиваем на каналы
+	cvCvtPixToPlane(hsv, s_plane, 0, v_plane, 0 );
+	float sum = 0;
+	for (int x = 0; x < v_plane->width; x += 5) {
+		for (int y = 0; y < v_plane->height; y += 5) {
+			cvSetImageROI(v_plane, cvRect(x, y, 5, 5));
+			CvScalar c = cvAvg(v_plane);
+			cvResetImageROI(v_plane);
+			if (/*s_ptr[x] < 30 && */c.val[0] > 200) {
+				sum ++;
+			}
+		}
+	}
+	sum *= 2500/ (float) (v_plane->width * v_plane->height);
+	cvReleaseImage(&hsv);
+	cvReleaseImage(&v_plane);
+	return sum;
 }
 
 #endif

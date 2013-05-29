@@ -1,39 +1,3 @@
-//
-//#include "stdafx.h"
-//#include "opencv2/highgui/highgui.hpp"
-//
-///**
-//* @function main
-//*/
-//int main( int argc, const char** argv )
-//{
-//	CvCapture* capture;
-//	IplImage* frame = 0;
-//
-//	while (true)
-//	{
-//		//Read the video stream
-//		capture = cvCaptureFromCAM(1);
-//		frame = cvQueryFrame( capture );
-//
-//		// create a window to display detected faces
-//		cvNamedWindow("Sample Program", CV_WINDOW_AUTOSIZE);
-//
-//		// display face detections
-//		cvShowImage("Sample Program", frame);
-//
-//		int c = cvWaitKey(10);
-//		if( (char)c == 27 ) { exit(0); }
-//
-//	}
-//
-//	// clean up and release resources
-//	cvReleaseImage(&frame);
-//
-//	return 0;
-//
-//}
-//
 #include "stdafx.h"
 
 #define MyCode
@@ -44,6 +8,7 @@
 #include <cv.h>
 #include "skeletonization.h"
 #include "analysis.h"
+#include "test.h"
 
 using namespace std;
 
@@ -93,8 +58,11 @@ int main (int argc, char** argv) {
 	IplImage *inputImage = 0;
 	// имя картинки задаётся первым параметром
     //char* filename = argc == 2 ? argv[1] : "test_find_pixel.bmp";
-	//char* filename = argc == 2 ? argv[1] : "Barns_grand_tetons_HSV_separation.jpg";
+	//char* filename = argc == 2 ? argv[1] : "4_2.jpg";
 	char* filename = argc == 2 ? argv[1] : "4.jpg";
+	//char* filename = argc == 2 ? argv[1] : "c3p2_20130315161000.jpg";
+	//char* filename = argc == 2 ? argv[1] : "Barns_grand_tetons_HSV_separation.jpg";
+	//char* filename = argc == 2 ? argv[1] : "Barns_grand_tetons_HSV_separation_2.jpg";
     // получаем картинку
 	inputImage = cvLoadImage(filename, CV_LOAD_IMAGE_GRAYSCALE);
 
@@ -110,58 +78,16 @@ int main (int argc, char** argv) {
 	}
 #define ice_search
 #ifdef ice_search
-	IplImage* hsv = cvCreateImage( cvGetSize(inputImage1), 8, 3 );
-	IplImage* h_plane = cvCreateImage( cvGetSize(inputImage1), 8, 1 );
-	IplImage* s_plane = cvCreateImage( cvGetSize(inputImage1), 8, 1 );
-	IplImage* v_plane = cvCreateImage( cvGetSize(inputImage1), 8, 1 );
+	IplImage* hsv = cvCreateImage( cvGetSize(inputImage1), inputImage1->depth, 3 );
+	IplImage* h_plane = cvCreateImage( cvGetSize(inputImage1), inputImage1->depth, 1 );
+	IplImage* s_plane = cvCreateImage( cvGetSize(inputImage1), inputImage1->depth, 1 );
+	IplImage* v_plane = cvCreateImage( cvGetSize(inputImage1), inputImage1->depth, 1 );
 	cvCvtColor( inputImage1, hsv, CV_BGR2HSV );
 	// разбиваем на каналы
 	cvCvtPixToPlane( hsv, h_plane, s_plane, v_plane, 0 );
-	//for( int y=0; y < 20/*(h_plane->width)*/; y++) {
-	//	uchar* ptr = (uchar*) (v_plane->imageData + y * v_plane->widthStep);
-	//	for (int x = 0; x <= 20/*h_plane->height*/; x++) {
-	//		cout << ptr[x] << " ";
-	//	}
-	//	cout << endl;
-	//}
-	//cvShowImage("h", h_plane);
-	//cvShowImage("s", s_plane);
-	/*IplImage* imageHue = cvCreateImage( cvGetSize(s_plane), 8, 1 );
-	for( int y=0; y < imageHue->height; y++) {
-		uchar* ptr = (uchar*) (imageHue->imageData + y * imageHue->widthStep);
-		for (int x = 0; x <= imageHue->width; x++) {
-			ptr[x] = 255;
-		}
-		cout << endl;
-	}
-	IplImage* imageSat = cvCreateImage( cvGetSize(s_plane), 8, 1 );
-	for( int y=0; y < imageSat->height; y++) {
-		uchar* ptr = (uchar*) (imageSat->imageData + y * imageSat->widthStep);
-		for (int x = 0; x <= imageSat->width; x++) {
-			ptr[x] = 255;
-		}
-		cout << endl;
-	}
-	IplImage* imageVal = cvCreateImage( cvGetSize(v_plane), 8, 1 );
-	for( int y=0; y < imageVal->height; y++) {
-		uchar* ptr = (uchar*) (imageVal->imageData + y * imageVal->widthStep);
-		for (int x = 0; x <= imageVal->width; x++) {
-			ptr[x] = 255;
-		}
-		cout << endl;
-	}*/
-	IplImage* imageVal = cvCreateImage( cvGetSize(v_plane), 8, 1 );
-	for( int y=0; y < 20/*v_plane->height*/; y++) {
-		uchar* ptr = (uchar*) (v_plane->imageData + y * v_plane->widthStep);
-		for (int x = 0; x <= 20/*v_plane->width*/; x++) {
-			printf("%d ", ptr[x]);
-		}
-		cout << endl;
-	}
-	//IplImage* mergeImage = cvCreateImage( cvGetSize(h_plane), 8, 3 );
-	//cvMerge(imageHue, v_plane, imageSat, 0, mergeImage);
-	//cvShowImage("mergeImage", mergeImage);
-	cvShowImage("v_plane", v_plane);
+	//plan_output (h_plane, s_plane, v_plane);
+	fillPlans(h_plane, s_plane, v_plane, inputImage1->depth);
+	
 	//взять область 5х5
 	//посчитать её средний тон
 	//лёд или не лёд
