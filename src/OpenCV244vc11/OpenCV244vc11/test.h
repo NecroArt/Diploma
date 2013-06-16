@@ -5,8 +5,8 @@
 using namespace std;
 
 #define SIDE_LENGTH 20
-#define S_THESHOLD 10 //вроде подходит
-#define V_THESHOLD 165 //вроде подходит
+#define SAT_THRESHOLD 10 //вроде подходит
+#define VAL_THRESHOLD 165 //вроде подходит
 
 void fillPlans (IplImage *h_plane, IplImage *s_plane, IplImage *v_plane, int depth) {
 	int sum = 0;
@@ -22,7 +22,7 @@ void fillPlans (IplImage *h_plane, IplImage *s_plane, IplImage *v_plane, int dep
 			//cout << "s = " << s.val[0] << endl;
 			cvResetImageROI(s_plane);
 			cvResetImageROI(v_plane);
-			if (/*h.val[0] < 5 && */s.val[0] < S_THESHOLD && v.val[0] > V_THESHOLD) {
+			if (/*h.val[0] < 5 && */s.val[0] < SAT_THRESHOLD  && v.val[0] > VAL_THRESHOLD) {
 				sum += SIDE_LENGTH * SIDE_LENGTH;
 				for (int i = 0; i < SIDE_LENGTH && (y+i) < h_plane->height; i++) {
 					uchar* h_ptr = (uchar*) (h_plane->imageData + (y+i) * h_plane->widthStep);

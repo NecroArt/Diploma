@@ -138,4 +138,9 @@ float calculateIceContent (IplImage *src) {
 	return sum;
 }
 
+float findDistanceToIbject (object current_object) {
+	float distance = 0;
+	return distance;
+}
+
 #endif

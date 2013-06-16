@@ -59,7 +59,8 @@ int main (int argc, char** argv) {
 	// имя картинки задаётся первым параметром
     //char* filename = argc == 2 ? argv[1] : "test_find_pixel.bmp";
 	//char* filename = argc == 2 ? argv[1] : "4_2.jpg";
-	char* filename = argc == 2 ? argv[1] : "4.jpg";
+	//char* filename = argc == 2 ? argv[1] : "4.jpg";
+	char* filename = argc == 2 ? argv[1] : "Image550.jpg";
 	//char* filename = argc == 2 ? argv[1] : "c3p2_20130315161000.jpg";
 	//char* filename = argc == 2 ? argv[1] : "Barns_grand_tetons_HSV_separation.jpg";
 	//char* filename = argc == 2 ? argv[1] : "Barns_grand_tetons_HSV_separation_2.jpg";
