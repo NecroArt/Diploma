@@ -60,7 +60,7 @@ int main (int argc, char** argv) {
     //char* filename = argc == 2 ? argv[1] : "test_find_pixel.bmp";
 	//char* filename = argc == 2 ? argv[1] : "4_2.jpg";
 	//char* filename = argc == 2 ? argv[1] : "4.jpg";
-	char* filename = argc == 2 ? argv[1] : "Image550.jpg";
+	char* filename = argc == 2 ? argv[1] : "3-3-100-0.jpg";
 	//char* filename = argc == 2 ? argv[1] : "c3p2_20130315161000.jpg";
 	//char* filename = argc == 2 ? argv[1] : "Barns_grand_tetons_HSV_separation.jpg";
 	//char* filename = argc == 2 ? argv[1] : "Barns_grand_tetons_HSV_separation_2.jpg";
@@ -77,26 +77,14 @@ int main (int argc, char** argv) {
 		pause();
 		exit(0);
 	}
-#define ice_search
-#ifdef ice_search
-	IplImage* hsv = cvCreateImage( cvGetSize(inputImage1), inputImage1->depth, 3 );
-	IplImage* h_plane = cvCreateImage( cvGetSize(inputImage1), inputImage1->depth, 1 );
-	IplImage* s_plane = cvCreateImage( cvGetSize(inputImage1), inputImage1->depth, 1 );
-	IplImage* v_plane = cvCreateImage( cvGetSize(inputImage1), inputImage1->depth, 1 );
-	cvCvtColor( inputImage1, hsv, CV_BGR2HSV );
-	// разбиваем на каналы
-	cvCvtPixToPlane( hsv, h_plane, s_plane, v_plane, 0 );
-	//plan_output (h_plane, s_plane, v_plane);
-	fillPlans(h_plane, s_plane, v_plane, inputImage1->depth);
-	
-	//взять область 5х5
-	//посчитать её средний тон
-	//лёд или не лёд
-#endif //ice_search
+
 //#define build_skelets
 #ifdef build_skelets
 	//inputImage = buildSkeleton(inputImage);
 	vector <Skelet> skelets;
+	IplImage *skeletImage = buildSkeleton(inputImage);
+	cvShowImage ("2", skeletImage);
+	cvReleaseImage(&skeletImage);
 	skelets = getSkelets(buildSkeleton(inputImage));
 	Skelet skelet1 = skelets[0];
 
@@ -114,7 +102,7 @@ int main (int argc, char** argv) {
 	//bool fl = compareSkelets(skelet1, skelet2);
 #endif
 #endif
-//#define main_action
+#define main_action
 #ifdef main_action
 	cvNamedWindow("original",CV_WINDOW_AUTOSIZE);
 	//улучшение снимков
@@ -190,7 +178,7 @@ int main (int argc, char** argv) {
 				CvSeq* contours=0;
 				IplImage *imageInRange = cvCreateImage(cvSize(inputImage->width,inputImage->height), IPL_DEPTH_8U, 1);
 				//cvInRangeS(gray, cvScalar(40), cvScalar(150), imageInRange);
-				int contoursCont = cvFindContours(bin, storage, &contours,sizeof(CvContour),CV_RETR_LIST,CV_CHAIN_APPROX_SIMPLE,cvPoint(0,0));
+				int contoursCont = cvFindContours(bin, storage, &contours, sizeof(CvContour), CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE, cvPoint(0,0));
 				IplImage *dst1 = cvCloneImage(improvedImage);
 				for(CvSeq* seq0 = contours; seq0 != 0; seq0 = seq0->h_next){
 					cvDrawContours(dst1, seq0, CV_RGB(255,216,0), CV_RGB(0,0,250), 0, 1, 8);

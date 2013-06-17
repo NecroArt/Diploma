@@ -222,7 +222,7 @@ vector <Skelet> getSkelets(IplImage *image) {
 				currentArch.push_back(newPoint);
 
 				//маркировка ячейки
-				uchar* ptr = (uchar*) (tempImage->imageData + y_current_pixel * tempImage->widthStep);
+				uchar* ptr = (uchar*) (tempImage->imageData) + y_current_pixel * tempImage->widthStep;
 				ptr[x_current_pixel] = 2;
 				
 				//поиск следующего пикселя
@@ -231,7 +231,7 @@ vector <Skelet> getSkelets(IplImage *image) {
 				int x_neighbor, y_neighbor;
 				for (int y = -1; y < 2; y++) {
 					y_current_pixel_plus_y = y_current_pixel + y;
-					uchar* ptr = (uchar*) (tempImage->imageData + y_current_pixel_plus_y * tempImage->widthStep);
+					uchar* ptr = (uchar*) (tempImage->imageData) + y_current_pixel_plus_y * tempImage->widthStep;
 					for (int x = -1; x < 2; x++) {
 						x_current_pixel_plus_x = x_current_pixel + x;
 						if ((x != 0 || y != 0) 
@@ -252,7 +252,7 @@ vector <Skelet> getSkelets(IplImage *image) {
 										is_second_black_neighbor_found = true;
 
 										//установка маркера 3 у чёрного соседа
-										uchar* cur_ptr = (uchar*) (tempImage->imageData + y_neighbor * tempImage->widthStep);
+										uchar* cur_ptr = (uchar*) (tempImage->imageData) + y_neighbor * tempImage->widthStep;
 										cur_ptr[x_neighbor] = 3;
 
 										is_single_black_neighbor_found = false;
@@ -262,7 +262,7 @@ vector <Skelet> getSkelets(IplImage *image) {
 									addVertexAndPixel (vertexStack, x_current_pixel, y_current_pixel, x_current_pixel_plus_x, y_current_pixel_plus_y);
 
 									//установка маркера 3 у чёрного соседа
-									uchar* cur_ptr = (uchar*) (tempImage->imageData + y_current_pixel_plus_y * tempImage->widthStep);
+									uchar* cur_ptr = (uchar*) (tempImage->imageData) + y_current_pixel_plus_y * tempImage->widthStep;
 									cur_ptr[x_current_pixel_plus_x] = 3;
 								}
 							}
@@ -293,14 +293,20 @@ vector <Skelet> getSkelets(IplImage *image) {
 		} while (vertexStack.size() != 0);
 		skelets.push_back(currentSkelet);
 	}
+	cvReleaseImage(&tempImage); 
 	return skelets;
 }
 bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixel, int &y_first_black_pixel)
 {
+	/*for (int i = 0; i < (tempImage->height -1); i++) {
+		uchar* ptr21 = (uchar*) (tempImage->imageData) + i * tempImage->widthStep;
+		ptr21[0] = 0;
+	}*/
+		
 	//поиск чёрного пикселя с одним чёрным соседом
 	bool black_pixel_is_found = false, second_black_pixel_is_found = false, third_black_pixel_is_found = false;
 	uchar* ptr = (uchar*) (tempImage->imageData);
-	uchar* ptr2 = (uchar*) (tempImage->imageData + tempImage->widthStep);
+	uchar* ptr2 = (uchar*) (tempImage->imageData) + tempImage->widthStep;
 	for(int x=0; (x < tempImage->width) && (black_pixel_is_found == false); x++ ) {
 		if (ptr[x] == 0) {
 			for (int i = -1; (i < 2) && (third_black_pixel_is_found == false); i++) {
@@ -343,9 +349,9 @@ bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixe
 
 	//поиск чёрного пикселя в левом столбце
 	for(int y = 1; (y < (tempImage->height - 1)) && (black_pixel_is_found == false); y++) {
-		uchar* ptr1 = (uchar*) (tempImage->imageData + (y - 1) * tempImage->widthStep);
-		uchar* ptr2 = (uchar*) (tempImage->imageData + y * tempImage->widthStep);
-		uchar* ptr3 = (uchar*) (tempImage->imageData + (y + 1) * tempImage->widthStep);
+		uchar* ptr1 = (uchar*) (tempImage->imageData) + (y - 1) * tempImage->widthStep;
+		uchar* ptr2 = (uchar*) (tempImage->imageData) + y * tempImage->widthStep;
+		uchar* ptr3 = (uchar*) (tempImage->imageData) + (y + 1) * tempImage->widthStep;
 		{
 			if (ptr2[0] == 0) {
 				for (int x = 0; (x < 2) && (third_black_pixel_is_found == false); x++) {
@@ -396,9 +402,9 @@ bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixe
 	}
 	//поиск чёрного пикселя в правом столбце
 	for(int y = 1; (y < (tempImage->height - 1)) && (black_pixel_is_found == false); y++) {
-		uchar* ptr1 = (uchar*) (tempImage->imageData + (y - 1) * tempImage->widthStep);
-		uchar* ptr2 = (uchar*) (tempImage->imageData + y * tempImage->widthStep);
-		uchar* ptr3 = (uchar*) (tempImage->imageData + (y + 1) * tempImage->widthStep);
+		uchar* ptr1 = (uchar*) (tempImage->imageData) + (y - 1) * tempImage->widthStep;
+		uchar* ptr2 = (uchar*) (tempImage->imageData) + y * tempImage->widthStep;
+		uchar* ptr3 = (uchar*) (tempImage->imageData) + (y + 1) * tempImage->widthStep;
 		{
 			if (ptr2[tempImage->width - 1] == 0) {
 				for (int x = tempImage->width - 2; (x < tempImage->width) && (second_black_pixel_is_found == false); x++) {
@@ -449,8 +455,8 @@ bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixe
 	}
 	//поиск чёрного пикселя в нижней строке
 	if (black_pixel_is_found == false) {
-		uchar* ptr = (uchar*) (tempImage->imageData + (tempImage->width - 2) * tempImage->widthStep);
-		uchar* ptr2 = (uchar*) (tempImage->imageData + (tempImage->width - 1) * tempImage->widthStep);
+		uchar* ptr = (uchar*) (tempImage->imageData) + (tempImage->height - 2) * tempImage->widthStep;
+		uchar* ptr2 = (uchar*) (tempImage->imageData) + (tempImage->height - 1) * tempImage->widthStep;
 		for(int x=0; (x < tempImage->width) && (black_pixel_is_found == false); x++ ) {
 			if (ptr2[x] == 0) {
 				for (int i = -1; (i < 2) && (third_black_pixel_is_found == false); i++) {
@@ -492,10 +498,10 @@ bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixe
 		}
 	}
 	//поиск чёрного пикселя не на границах
-	for(int y = 1; (y < (tempImage->height - 1)) && (black_pixel_is_found == false); y++) {
-		uchar* ptr1 = (uchar*) (tempImage->imageData + (y - 1) * tempImage->widthStep);
-		uchar* ptr2 = (uchar*) (tempImage->imageData + y * tempImage->widthStep);
-		uchar* ptr3 = (uchar*) (tempImage->imageData + (y + 1) * tempImage->widthStep);
+	for(int y = 1; (y < (tempImage->height - 2)) && (black_pixel_is_found == false); y++) {
+		uchar* ptr1 = (uchar*) (tempImage->imageData) + (y - 1) * tempImage->widthStep;
+		uchar* ptr2 = (uchar*) (tempImage->imageData) + y * tempImage->widthStep;
+		uchar* ptr3 = (uchar*) (tempImage->imageData) + (y + 1) * tempImage->widthStep;
 		for(int x = 1; x < (tempImage->width - 1) && (black_pixel_is_found == false); x++ ) {
 			if (ptr2[x] == 0) {
 				//поиск единственного чёрного пикселя
@@ -587,9 +593,9 @@ bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixe
 
 	//поиск чёрного пикселя в левом столбце
 	for(int y = 1; (y < (tempImage->height - 1)) && (black_pixel_is_found == false); y++) {
-		uchar* ptr1 = (uchar*) (tempImage->imageData + (y - 1) * tempImage->widthStep);
-		uchar* ptr2 = (uchar*) (tempImage->imageData + y * tempImage->widthStep);
-		uchar* ptr3 = (uchar*) (tempImage->imageData + (y + 1) * tempImage->widthStep);
+		uchar* ptr1 = (uchar*) (tempImage->imageData) + (y - 1) * tempImage->widthStep;
+		uchar* ptr2 = (uchar*) (tempImage->imageData) + y * tempImage->widthStep;
+		uchar* ptr3 = (uchar*) (tempImage->imageData) + (y + 1) * tempImage->widthStep;
 		{
 			if (ptr2[0] == 255) {
 				for (int x = 0; (x < 2) && (second_black_pixel_is_found == false); x++) {
@@ -634,9 +640,9 @@ bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixe
 
 	//поиск чёрного пикселя в правом столбце
 	for(int y = 1; (y < (tempImage->height - 1)) && (black_pixel_is_found == false); y++) {
-		uchar* ptr1 = (uchar*) (tempImage->imageData + (y - 1) * tempImage->widthStep);
-		uchar* ptr2 = (uchar*) (tempImage->imageData + y * tempImage->widthStep);
-		uchar* ptr3 = (uchar*) (tempImage->imageData + (y + 1) * tempImage->widthStep);
+		uchar* ptr1 = (uchar*) (tempImage->imageData) + (y - 1) * tempImage->widthStep;
+		uchar* ptr2 = (uchar*) (tempImage->imageData) + y * tempImage->widthStep;
+		uchar* ptr3 = (uchar*) (tempImage->imageData) + (y + 1) * tempImage->widthStep;
 		{
 			if (ptr2[tempImage->width - 1] == 255) {
 				for (int x = tempImage->width - 2; (x < tempImage->width) && (second_black_pixel_is_found == false); x++) {
@@ -680,8 +686,8 @@ bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixe
 	}
 	//поиск чёрного пикселя в нижней строке
 	if (black_pixel_is_found == false) {
-		uchar* ptr = (uchar*) (tempImage->imageData + (tempImage->width - 2) * tempImage->widthStep);
-		uchar* ptr2 = (uchar*) (tempImage->imageData + (tempImage->width - 1) * tempImage->widthStep);
+		uchar* ptr = (uchar*) (tempImage->imageData) + (tempImage->width - 2) * tempImage->widthStep;
+		uchar* ptr2 = (uchar*) (tempImage->imageData) + (tempImage->width - 1) * tempImage->widthStep;
 		for(int x=0; (x < tempImage->width) && (black_pixel_is_found == false); x++ ) {
 			if (ptr2[x] == 255) {
 				for (int i = -1; (i < 2) && (second_black_pixel_is_found == false); i++) {
@@ -721,9 +727,9 @@ bool findBlackPixelWithOneNeighbor (IplImage *tempImage, int &x_first_black_pixe
 
 	//поиск чёрного пикселя не на границах
 	for(int y = 1; (y < (tempImage->height - 1)) && (black_pixel_is_found == false); y++) {
-		uchar* ptr1 = (uchar*) (tempImage->imageData + (y - 1) * tempImage->widthStep);
-		uchar* ptr2 = (uchar*) (tempImage->imageData + y * tempImage->widthStep);
-		uchar* ptr3 = (uchar*) (tempImage->imageData + (y + 1) * tempImage->widthStep);
+		uchar* ptr1 = (uchar*) (tempImage->imageData) + (y - 1) * tempImage->widthStep;
+		uchar* ptr2 = (uchar*) (tempImage->imageData) + y * tempImage->widthStep;
+		uchar* ptr3 = (uchar*) (tempImage->imageData) + (y + 1) * tempImage->widthStep;
 		for(int x = 1; x < (tempImage->width - 1) && (black_pixel_is_found == false); x++ ) {
 			if (ptr2[x] == 255) {
 				//поиск единственного чёрного пикселя
