@@ -51,6 +51,9 @@ bool isFirstArchBigger (Arch arch1, Arch arch2);
 //подсчитывает процентное содержания льда на снимке
 float calculateIceContent (IplImage *src);
 
+//строит ортогональную проекцию изображения
+IplImage *transformToHorizontalImage (IplImage *inputImage);
+
 bool compare2Skelets (Skelet first_skelet, Skelet second_skelet) {
 	bool is_equal = true;
 	sortSkelet(first_skelet.arch);
@@ -109,8 +112,9 @@ void sortSkelet(vector <Arch> &Arches) {
 	sort (Arches.begin(), Arches.end(), isFirstArchBigger);
 }
 
-IplImage *getIce (IplImage *inputImage) {
-	IplImage *outputImage = cvCreateImage(cvSize(inputImage->width,inputImage->height), IPL_DEPTH_8U, 1);
+IplImage *transformToHorizontalImage (IplImage *inputImage) {
+	IplImage *outputImage = cvCreateImage(cvSize(inputImage->width, inputImage->height), IPL_DEPTH_8U, 3);
+	float focal_length = 0;
 	return outputImage;
 }
 
@@ -142,5 +146,6 @@ float findDistanceToIbject (object current_object) {
 	float distance = 0;
 	return distance;
 }
+
 
 #endif

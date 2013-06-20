@@ -59,7 +59,7 @@ int main (int argc, char** argv) {
 	// имя картинки задаётся первым параметром
     //char* filename = argc == 2 ? argv[1] : "test_find_pixel.bmp";
 	//char* filename = argc == 2 ? argv[1] : "4_2.jpg";
-	//char* filename = argc == 2 ? argv[1] : "4.jpg";
+	//char* filename = argc == 2 ? argv[1] : "testjpg1/6.jpg";
 	char* filename = argc == 2 ? argv[1] : "3-3-100-0.jpg";
 	//char* filename = argc == 2 ? argv[1] : "c3p2_20130315161000.jpg";
 	//char* filename = argc == 2 ? argv[1] : "Barns_grand_tetons_HSV_separation.jpg";
@@ -181,8 +181,9 @@ int main (int argc, char** argv) {
 				int contoursCont = cvFindContours(bin, storage, &contours, sizeof(CvContour), CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE, cvPoint(0,0));
 				IplImage *dst1 = cvCloneImage(improvedImage);
 				for(CvSeq* seq0 = contours; seq0 != 0; seq0 = seq0->h_next){
-					cvDrawContours(dst1, seq0, CV_RGB(255,216,0), CV_RGB(0,0,250), 0, 1, 8);
+					cvDrawContours(dst1, seq0, CV_RGB(0,0,250), CV_RGB(255,216,0), 0, 1, 8);
 				}
+				cvSaveImage("contours.jpg", dst1);
 				cvNamedWindow("contours", 0);
 				cvShowImage("contours", dst1);
 				cvReleaseImage(&imageInRange);
