@@ -183,7 +183,7 @@ int main (int argc, char** argv) {
 				for(CvSeq* seq0 = contours; seq0 != 0; seq0 = seq0->h_next){
 					cvDrawContours(dst1, seq0, CV_RGB(0,0,250), CV_RGB(255,216,0), 0, 1, 8);
 				}
-				cvSaveImage("contours.jpg", dst1);
+				//cvSaveImage("contours.jpg", dst1);
 				cvNamedWindow("contours", 0);
 				cvShowImage("contours", dst1);
 				cvReleaseImage(&imageInRange);
